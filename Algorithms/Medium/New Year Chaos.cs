@@ -14,19 +14,23 @@ using System;
 
 class Solution {
     // https://www.hackerrank.com/challenges/new-year-chaos/problem
-
+    
     // Complete the minimumBribes function below.
     static void minimumBribes(int[] q) {
         var minBribes = 0;
         var reversedArray = q.Reverse();
         
-        for (var i = 0; i < q.Length; i++){
+        for (var i = q.Length - 1; i >= 0; i--){
             if (q[i] - (i + 1) > 2){
                 Console.WriteLine("Too chaotic");
                 return;
             }
             
-            minBribes += reversedArray.Take(q.Length - i - 1).Count(x => x < q[i]);
+            for (var y = Math.Max(0, q[i] - 2); y < i; y++) {
+                if (q[y] > q[i]) {
+                    minBribes++;
+                }
+            }
         }
         
         Console.WriteLine(minBribes);
